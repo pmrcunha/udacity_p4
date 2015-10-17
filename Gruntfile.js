@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
-			dynamic: {
+			minifyjs: {
 				files: [{
 					expand: true,
 					cwd: 'src/js',
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 			}
 		},
 		cssmin: {
-			target: {
+			minifycss: {
 				files: [{
 					expand: true,
 					cwd: 'src/css',
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
 			}
 		},
 		imagemin: {
-			dynamic: {
+			optimages: {
 				files: [{
 					expand: true,
 					cwd: 'src/img',
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
 				minifyJS: true,
 				minifyCSS: true
 			},
-			dynamic: {
+			minifyhtml: {
 				files: [{
 					expand: true,
 					cwd: 'src/',
@@ -83,55 +83,32 @@ module.exports = function(grunt) {
 				}]
 			}
 		},
-		responsive_images: {
-			portfolioImages: {
-				options: {
-					sizes: [{
-						name: 'thumbnail',
-						width: 120
-					},
-					{
-						name: 'small',
-						width: 320
-					},
-					{
-						name: 'large',
-						width: 640
-					}]
-				},
-				files: [{
-					expand: true,
-					cwd: 'src/img',
-					src: ['*.{png,jpg}'],
-					dest: 'build/img'
-				}]
-			}
-		},
 		inlinecss: {
-			indexhtml: {
-				options: {
-					inline: true
-				},
+			options: {
+				inline: true
+			},
+			inlineall: {
 				src: 'src/index.html',
 				dest: 'build/index.html'
 			}
 		}
 	});
 
-	// Load the plugin that provides the "uglify" task.
+	// Load the plugins that provide the tasks.
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.loadNpmTasks('grunt-contrib-htmlmin');
-	grunt.loadNpmTasks('grunt-responsive-images');
 	grunt.loadNpmTasks('grunt-inline-css');
 
 	// Default tasks.
+	/* CSS and JS are inlined, and the HTML is minified afterwards,
+	 * therefore there is no need to minify CSS and JS
+	 */
 	grunt.registerTask(
 		'default', [
-		'uglify',
-		'cssmin',
-		'responsive_images',
+		//'uglify',
+		//'cssmin',
 		'imagemin',
 		'inlinecss',
 		'htmlmin'

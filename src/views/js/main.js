@@ -449,11 +449,13 @@ var resizePizzas = function(size) {
   }
 
   // Iterates through pizza elements on the page and changes their widths
-
-
+  /* The parameter timestamp is passed by requestAnimationFrame.
+   * The DOM is queried first and the style changes are applied afterwards in one batch,
+   * to avoid forced synchronous layouts.
+   */
   function changePizzaSizes(timestamp) {
     var allContainers = document.querySelectorAll(".randomPizzaContainer");
-    var firstContainer = allContainers[0];
+    var firstContainer = allContainers[0]; // All the elements are identical, no need to query all.
     var dx = determineDx(firstContainer, size);
     var newwidth = (firstContainer.offsetWidth + dx) + 'px';
     for (var i = 0; i < allContainers.length; i++) {
@@ -461,6 +463,7 @@ var resizePizzas = function(size) {
     }
   }
 
+  // Calls the changePizzaSizes function before the next frame is painted
   window.requestAnimationFrame(changePizzaSizes);
 
   // User Timing API is awesome
@@ -502,11 +505,15 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // Moves the sliding background pizzas based on scroll position
+// The timestamp parameter is passed by requestAnimationFrame
 function updatePositions(timestamp) {
   frame++;
   window.performance.mark("mark_start_frame");
 
   var items = document.querySelectorAll('.mover');
+  /* The scrollTop method returns an integer. Storing it outside the loop,
+   * the DOM is not queried again, and forced synchronous layouts are avoided.
+   */
   var scrollTop = document.body.scrollTop;
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((scrollTop / 1250) + (i % 5));
@@ -523,7 +530,7 @@ function updatePositions(timestamp) {
   }
 }
 
-// runs updatePositions on scroll
+// runs updatePositions on scroll, before painting the next frame
 window.addEventListener('scroll', function() {
   window.requestAnimationFrame(updatePositions);
 });
