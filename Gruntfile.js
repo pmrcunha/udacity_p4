@@ -3,16 +3,12 @@ module.exports = function(grunt) {
 	//Project configuration
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		/* CSS and JS are inlined, and the HTML is minified afterwards,
+	 	 * therefore there is no need to minify CSS and JS in index.html
+	 	 */
 		uglify: {
 			minifyjs: {
 				files: [{
-					expand: true,
-					cwd: 'src/js',
-					src: ['*.js'],
-					dest: 'build/js',
-					ext: '.min.js'
-				},
-				{
 					expand: true,
 					cwd: 'src/views/js',
 					src: ['*.js'],
@@ -24,13 +20,6 @@ module.exports = function(grunt) {
 		cssmin: {
 			minifycss: {
 				files: [{
-					expand: true,
-					cwd: 'src/css',
-					src: ['*.css'],
-					dest: 'build/css',
-					ext: '.min.css'
-				},
-				{
 					expand: true,
 					cwd: 'src/views/css',
 					src: ['*.css'],
@@ -102,13 +91,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-inline-css');
 
 	// Default tasks.
-	/* CSS and JS are inlined, and the HTML is minified afterwards,
-	 * therefore there is no need to minify CSS and JS
-	 */
 	grunt.registerTask(
 		'default', [
-		//'uglify',
-		//'cssmin',
+		'uglify',
+		'cssmin',
 		'imagemin',
 		'inlinecss',
 		'htmlmin'
