@@ -66,7 +66,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: 'src/',
-					src: ['*.html'],
+					src: ['*.html', '!index.html'],
 					dest: 'build/',
 					ext: '.min.html'
 				},
@@ -76,6 +76,10 @@ module.exports = function(grunt) {
 					src: ['*.html'],
 					dest: 'build/views',
 					ext: '.min.html'
+				},
+				{
+					src: 'build/index.html',
+					dest: 'build/index.html'
 				}]
 			}
 		},
@@ -102,6 +106,15 @@ module.exports = function(grunt) {
 					dest: 'build/img'
 				}]
 			}
+		},
+		inlinecss: {
+			indexhtml: {
+				options: {
+					inline: true
+				},
+				src: 'src/index.html',
+				dest: 'build/index.html'
+			}
 		}
 	});
 
@@ -111,6 +124,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.loadNpmTasks('grunt-contrib-htmlmin');
 	grunt.loadNpmTasks('grunt-responsive-images');
+	grunt.loadNpmTasks('grunt-inline-css');
 
 	// Default tasks.
 	grunt.registerTask(
@@ -119,6 +133,7 @@ module.exports = function(grunt) {
 		'cssmin',
 		'responsive_images',
 		'imagemin',
-		'htmlmin']
-		);
+		'inlinecss',
+		'htmlmin'
+		]);
 };
