@@ -4,7 +4,7 @@ This repository includes websites which I optimized for speed, as a project for 
 
 ### Running the project
 
-To run the websites, you can simply visit this [Github Page](https://github.com/pmrcunha/udacity_p4).
+To run the websites, you can simply visit this [Github Page](http://pmrcunha.github.io/udacity_p4/).
 
 ### Optimizations
 
