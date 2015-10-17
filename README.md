@@ -26,3 +26,12 @@ _Note: While the CSS is render blocking and effectively was a hinder to the page
 _Note: This also minifies the CSS and JS that is inlined in index.html_
 
 The code was separated into production (build) and source (src) code. Tasks were automated using GruntJS.
+
+### Dependencies
+
++ _grunt_
++ _grunt-contrib-cssmin_
++ _grunt-contrib-htmlmin_
++ _grunt-contrib-imagemin_
++ _grunt-contrib-uglify_
++ _grunt-inline-css_
